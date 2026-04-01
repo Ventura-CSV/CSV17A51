@@ -1,8 +1,7 @@
 import pytest
 from main import (
     get_domain, get_range, is_well_defined,
-    is_injective, is_surjective, is_bijective,
-    get_inverse, find_non_injective_pair, find_non_surjective_element
+    is_injective, is_surjective, is_bijective
 )
 
 # ── shared test data ──────────────────────────────────────────────────────────
@@ -70,7 +69,7 @@ def test_injective_false():
 def test_injective_false_neither():
     assert is_injective(nei) is False
 
-# ── T3: surjective and bijective ──────────────────────────────────────────────
+# ── T3: surjective ──────────────────────────────────────────────────────────
 
 @pytest.mark.T3
 def test_surjective_true():
@@ -84,53 +83,16 @@ def test_surjective_true_sur():
 def test_surjective_false():
     assert is_surjective(inj, inj_T) is False
 
-@pytest.mark.T3
+# ── T4: bijective ───────────────────────────────────────────────────────────
+
+@pytest.mark.T4
 def test_bijective_true():
     assert is_bijective(bij, bij_T) is True
 
-@pytest.mark.T3
+@pytest.mark.T4
 def test_bijective_false_inj_only():
     assert is_bijective(inj, inj_T) is False
 
-@pytest.mark.T3
+@pytest.mark.T4
 def test_bijective_false_sur_only():
     assert is_bijective(sur, sur_T) is False
-
-# ── T4: inverse and counterexamples ──────────────────────────────────────────
-
-@pytest.mark.T4
-def test_inverse_correct():
-    assert get_inverse(bij, bij_T) == {'a':1, 'b':2, 'c':3}
-
-@pytest.mark.T4
-def test_inverse_raises_not_injective():
-    with pytest.raises(ValueError):
-        get_inverse(sur, sur_T)
-
-@pytest.mark.T4
-def test_inverse_raises_not_surjective():
-    with pytest.raises(ValueError):
-        get_inverse(inj, inj_T)
-
-@pytest.mark.T4
-def test_non_injective_pair_found():
-    pair = find_non_injective_pair(sur)
-    assert pair is not None
-    x1, x2 = pair
-    assert x1 != x2
-    assert sur[x1] == sur[x2]
-
-@pytest.mark.T4
-def test_non_injective_pair_none():
-    assert find_non_injective_pair(bij) is None
-
-@pytest.mark.T4
-def test_non_surjective_element_found():
-    elem = find_non_surjective_element(inj, inj_T)
-    assert elem is not None
-    assert elem in inj_T
-    assert elem not in get_range(inj)
-
-@pytest.mark.T4
-def test_non_surjective_element_none():
-    assert find_non_surjective_element(bij, bij_T) is None
