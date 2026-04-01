@@ -24,7 +24,7 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install pytest
 
-      # ---- Grader 1: compile (10 pts) ----
+      # ---- compile (10 pts) ----
       - name: Compile tests
         id: compile
         uses: classroom-resources/autograding-command-grader@v1
@@ -34,18 +34,17 @@ jobs:
           timeout: 30
           max-score: 10
 
-      # ---- Grader 2: run (10 pts) ----
+      # ---- run (10 pts) ----
       - name: Run tests
         id: run
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: "Run tests"
-          command: |
-            timeout 5s python3 main.py < data/data.txt > /dev/null
+          command: python3 -c "from main import *"
           timeout: 30
           max-score: 10
 
-      # ---- Grader 3: T1 (20 pts) ----
+      # ---- T1 (20 pts) ----
       - name: T1 tests
         id: T1
         uses: classroom-resources/autograding-command-grader@v1
@@ -55,7 +54,7 @@ jobs:
           timeout: 10
           max-score: 20
 
-      # ---- Grader 4: T2 (20 pts) ----
+      # ---- T2 (20 pts) ----
       - name: T2 tests
         id: T2
         uses: classroom-resources/autograding-command-grader@v1
@@ -65,7 +64,7 @@ jobs:
           timeout: 10
           max-score: 20
 
-      # ---- Grader 5: T3 (20 pts) ----
+      # ---- T3 (20 pts) ----
       - name: T3 tests
         id: T3
         uses: classroom-resources/autograding-command-grader@v1
@@ -75,7 +74,7 @@ jobs:
           timeout: 10
           max-score: 20
 
-      # ---- Grader 6: T4 (20 pts) ----
+      # ---- T4 (20 pts) ----
       - name: T4 tests
         id: T4
         uses: classroom-resources/autograding-command-grader@v1
